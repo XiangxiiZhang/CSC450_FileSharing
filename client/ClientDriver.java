@@ -14,7 +14,7 @@ public class ClientDriver
     public static void main(String[] args) throws Exception
     {
         Socket s = new Socket("localhost", 2222);
-
+        /*
         Scanner textInput = new Scanner(s.getInputStream());
         Scanner localInput = new Scanner(System.in);
         PrintStream textOutput = new PrintStream(s.getOutputStream());
@@ -68,7 +68,12 @@ public class ClientDriver
             }
             
         }
-
+        */
+        String torrentName = "cambria.jpeg";
+        PrintStream textOutputOverSocket = new PrintStream(s.getOutputStream());
+        textOutputOverSocket.println(torrentName);
+        textOutputOverSocket.println("ip address");// how do we get our Ip
+        textOutputOverSocket.println(""+ ClientCORE.getNextPortNumber());
 
     }
 }

@@ -23,13 +23,18 @@ public class TorrentThread extends Thread
         }
         catch(Exception e)
         {
-            
+
         }
         
     }
 
     public void run()
     {
+        //get the torrent they want to participate in
+        String torrentName = this.textInput.nextLine();
+        String ip_address = this.textInput.nextLine();
+        String port_number = this.textInput.nextLine();
+        /*
         System.out.println("Child thread started!!!!");
         this.textOutput.println("Do you want to send or receive a file? ");
         String answer = this.textInput.nextLine();
@@ -77,5 +82,6 @@ public class TorrentThread extends Thread
                 e.printStackTrace();
             }
         }
+        */
     }
 }
