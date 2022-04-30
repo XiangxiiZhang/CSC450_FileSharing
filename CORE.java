@@ -14,28 +14,46 @@ public class CORE
     {
         for(DataOutputStream dos : CORE.theClientDOSsss)
         {
-            try {
-                dos.close();
-            } catch (Exception e) {
-                //TODO: handle exception
+            for(PrintStream ps : CORE.theClientPrintStreams)
+            {
+                ps.println(s);
             }
             
         }
-        CORE.theClientDOSsss.clear();
     }
-
-    public synchronized static void broadCastByte(byte b)
+    public static String getConnectedClientIPsString()
     {
-        try
+        String answer = "";
+        for(int i = 0; i < CORE.theConnectedClientIPs.size(); i++)
         {
-            for(DataOutputStream dos : CORE.theClientDOSsss)
+            if(answer.length()==0)
             {
-                dos.writeByte(b);
+                answer = answer + CORE.theConnectedClientIPs.get(i);
+            }
+            else
+            {
+                answer = answer + "," + CORE.theConnectedClientIPs.get(i);
             }
         }
-        catch(Exception e)
+        return answer;
+    }
+    public synchronized static voidchangeConnectedClientIPs(String ip, boolean shouldAdd)
+    {
+        //if shouldAdd is true, we are adding the ip, else we are removing the IP
+        if(shouldAdd)
         {
-            e.printStackTrace();
+            CORE.theConnectedClientIPs.add(ip);
+        }
+        else
+        {
+            for(int i = 0; i < CORE.theConnectedClientIPs.size(); i++)
+            {
+                if(CORE.theConnectedClientIPs.get(i).equals(ip))
+                {
+                    CORE.theConnectedClientIPs.remove(i);
+                    return;
+                }
+            }
         }
     }
 }

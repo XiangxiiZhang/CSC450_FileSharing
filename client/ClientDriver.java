@@ -11,9 +11,13 @@ import java.util.Scanner;
 
 public class ClientDriver 
 {
+    //the below info would have been gleened from a .torrent file
+    private static String TRACKERIP = "localhost";
+    private static int TRACKERPORT = 6881;
+
     public static void main(String[] args) throws Exception
     {
-        Socket s = new Socket("localhost", 2222);
+        Socket s = new Socket(TRACKERIP, TRACKERPORT);
         /*
         Scanner textInput = new Scanner(s.getInputStream());
         Scanner localInput = new Scanner(System.in);
@@ -69,11 +73,16 @@ public class ClientDriver
             
         }
         */
-        String torrentName = "cambria.jpeg";
-        PrintStream textOutputOverSocket = new PrintStream(s.getOutputStream());
-        textOutputOverSocket.println(torrentName);
-        textOutputOverSocket.println("ip address");// how do we get our Ip
-        textOutputOverSocket.println(""+ ClientCORE.getNextPortNumber());
-
+        Socket s = new Socket(TRACKERIP, TRACKERPORT);
+        Scanner socketInput = new Scanner(s.getInputStream());
+        PrintStream socketOutput = new PrintStream(s.getOutputStream());
+        socketOutput.println(Inet4Address.getLocalHost().getHostAddress());
+        String listOfConnectedClients = socketInput.nextLine();
+        ClientCORE.updateTheConnectedClientIPs(listOfConnectedClients);
+        
+        //In our main thread here, we want to start the torrent process of sharing bits
+        while(true){
+            
+        }
     }
 }
