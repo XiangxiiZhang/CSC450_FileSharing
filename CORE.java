@@ -1,26 +1,34 @@
 import java.io.DataOutputStream;
 import java.util.ArrayList;
+import java.io.PrintStream;
 
 public class CORE 
 {
+    private static ArrayList<String> theConnectedClientIPs = new ArrayList<String>();
+    private static ArrayList<PrintStream> theClientPrintStreams = new ArrayList<PrintStream>();
     private static ArrayList<DataOutputStream> theClientDOSsss= new ArrayList<DataOutputStream>();
+    private static int currentClientPort = 3000;
 
-    public synchronized static void addDOS(DataOutputStream dos)
+    public synchronized void addPrintStream(PrintStream ps)
     {
         CORE.theClientDOSsss.add(dos);
     }
-    
-    public static synchronized void removeReceivers()
+    		
+    static public synchronized int getNextClientPort()
     {
-        for(DataOutputStream dos : CORE.theClientDOSsss)
+        return CORE.currentClientPort++;
+    }
+
+    public static void broadcastStringToClients(String s)
+    {
         {
             for(PrintStream ps : CORE.theClientPrintStreams)
             {
                 ps.println(s);
             }
-            
         }
     }
+
     public static String getConnectedClientIPsString()
     {
         String answer = "";
@@ -37,7 +45,7 @@ public class CORE
         }
         return answer;
     }
-    public synchronized static voidchangeConnectedClientIPs(String ip, boolean shouldAdd)
+    public static voidchangeConnectedClientIPs(String ip, boolean shouldAdd)
     {
         //if shouldAdd is true, we are adding the ip, else we are removing the IP
         if(shouldAdd)
